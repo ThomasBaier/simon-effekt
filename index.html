@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+
+<head>
+  <link href="https://db.onlinewebfonts.com/c/ce4b0ee545ec52c2ec8cec62d23ffb09?family=Calculator" rel="stylesheet">
+
+  <script type="module" src="index.js" charset="utf-8"></script>
+
+  <script src="https://momentjs.com/downloads/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  <script type="module" src="exp9.js" charset="utf-8"></script>
+  <script type="module" src="exp10.js" charset="utf-8"></script>
+  <script type="module" src="exp7.js" charset="utf-8"></script>
+  <script type="module" src="exp7a.js" charset="utf-8"></script>
+  <script type="module" src="exp5.js" charset="utf-8"></script>
+  <script type="module" src="exp4.js" charset="utf-8"></script>
+  <script type="module" src="exp1.js" charset="utf-8"></script>
+  <script type="module" src="exp2.js" charset="utf-8"></script>
+  <script type="module" src="exp3.js" charset="utf-8"></script>
+  <script type="module" src="lodash.js" charset="utf-8"></script>
+
+
+
+  <!--<script type="module" src="exp6.js" charset="utf-8"></script>
+  <script type="module" src="exp8.js" charset="utf-8"></script>
+  -->
+  <script type="module" src="questions.js" charset="utf-8"></script>
+  <style>
+    <!--HEADING START
+    -->
+    /*
+    *
+    Made
+    by
+    Erik
+    Terwan
+    *
+    24th
+    of
+    November
+    2015
+    *
+    MIT
+    License
+    *
+    *
+    *
+    If
+    you
+    are
+    thinking
+    of
+    using
+    this
+    in
+    *
+    production
+    code,
+    beware
+    of
+    the
+    browser
+    *
+    prefixes.
+    */
+    body
+    {
+    margin:
+    0;
+    padding:
+    0;
+    /*
+    make
+    it
+    look
+    decent
+    enough
+    */
+    /*
+    background:
+    #232323;
+    color:
+    #cdcdcd;
+    */
+    font-family:
+    "Avenir
+    Next",
+    "Avenir",
+    sans-serif;
+    }
+    #menuToggle
+    {
+    display:
+    inline;
+    position:
+    relative;
+    top:
+    50px;
+    left:
+    50px;
+    z-index:
+    1;
+    -webkit-user-select:
+    none;
+    user-select:
+    none;
+    }
+    #menuToggle
+    a
+    {
+    text-decoration:
+    none;
+    color:
+    #232323;
+    transition:
+    color
+    0.3s
+    ease;
+    }
+    #menuToggle
+    a:hover
+    {
+    color:
+    tomato;
+    }
+    #menuToggle
+    input
+    {
+    display:
+    block;
+    width:
+    40px;
+    height:
+    32px;
+    position:
+    absolute;
+    top:
+    -7px;
+    left:
+    -5px;
+    cursor:
+    pointer;
+    opacity:
+    0;
+    /*
+    hide
+    this
+    */
+    z-index:
+    2;
+    /*
+    and
+    place
+    it
+    over
+    the
+    hamburger
+    */
+    -webkit-touch-callout:
+    none;
+    }
+    /*
+    *
+    Just
+    a
+    quick
+    hamburger
+    */
+    #menuToggle
+    span
+    {
+    display:
+    block;
+    width:
+    33px;
+    height:
+    4px;
+    margin-bottom:
+    5px;
+    position:
+    relative;
+    background:
+    #cdcdcd;
+    border-radius:
+    3px;
+    z-index:
+    1;
+    transform-origin:
+    4px
+    0px;
+    transition:
+    transform
+    0.5s
+    cubic-bezier(0.77,
+    0.2,
+    0.05,
+    1.0),
+    background
+    0.5s
+    cubic-bezier(0.77,
+    0.2,
+    0.05,
+    1.0),
+    opacity
+    0.55s
+    ease;
+    }
+    #menuToggle
+    span:first-child
+    {
+    transform-origin:
+    0%
+    0%;
+    }
+    #menuToggle
+    span:nth-last-child(2)
+    {
+    transform-origin:
+    0%
+    100%;
+    }
+    /*
+    *
+    Transform
+    all
+    the
+    slices
+    of
+    hamburger
+    *
+    into
+    a
+    crossmark.
+    */
+    #menuToggle
+    input:checked
+    ~
+    span
+    {
+    opacity:
+    1;
+    transform:
+    rotate(45deg)
+    translate(-2px,
+    -1px);
+    background:
+    #232323;
+    }
+    /*
+    *
+    But
+    let's
+    hide
+    the
+    middle
+    one.
+    */
+    #menuToggle
+    input:checked
+    ~
+    span:nth-last-child(3)
+    {
+    opacity:
+    0;
+    transform:
+    rotate(0deg)
+    scale(0.2,
+    0.2);
+    }
+    /*
+    *
+    Ohyeah
+    and
+    the
+    last
+    one
+    should
+    go
+    the
+    other
+    direction
+    */
+    #menuToggle
+    input:checked
+    ~
+    span:nth-last-child(2)
+    {
+    transform:
+    rotate(-45deg)
+    translate(0,
+    -1px);
+    }
+    /*
+    *
+    Make
+    this
+    absolute
+    positioned
+    *
+    at
+    the
+    top
+    left
+    of
+    the
+    screen
+    */
+    #menu
+    {
+    position:
+    absolute;
+    width:
+    300px;
+    margin:
+    -100px
+    0
+    0
+    -50px;
+    padding:
+    50px;
+    padding-top:
+    125px;
+    background:
+    #ededed;
+    list-style-type:
+    none;
+    -webkit-font-smoothing:
+    antialiased;
+    /*
+    to
+    stop
+    flickering
+    of
+    text
+    in
+    safari
+    */
+    transform-origin:
+    0%
+    0%;
+    transform:
+    translate(-100%,
+    0);
+    transition:
+    transform
+    0.5s
+    cubic-bezier(0.77,
+    0.2,
+    0.05,
+    1.0);
+    }
+    #menu
+    li
+    {
+    padding:
+    10px
+    0;
+    font-size:
+    22px;
+    }
+    /*
+    *
+    And
+    let's
+    slide
+    it
+    in
+    from
+    the
+    left
+    */
+    #menuToggle
+    input:checked
+    ~
+    ul
+    {
+    transform:
+    none;
+    }
+
+  <!--HEADING STYLES FINISCH-->
+  #base {
+  position: relative;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  cursor: pointer;
+
+  /* -webkit-filter: blur(5px); */
+
+  }
+
+  #popup-text {
+  overflow-y: scroll;
+  height: 400px;
+  white-space: pre-wrap;
+  }
+
+  #popup {
+  border-style: groove;
+  background-color: rgb(232, 244, 253);
+  position: absolute;
+  height: auto;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  width: 80%;
+  padding: 1%;
+  z-index: 3;
+  }
+
+
+
+  * {
+  font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .bigFont {
+  font-size: 30px;
+  display: inline-block;
+  }
+
+  .bigFont1 {
+  font-size: 7vh;
+  display: inline-block;
+  border: 1px solid black;
+
+  }
+
+
+  .sideFont {
+  font-size: 50px;
+  }
+
+  .container {
+  text-align: center;
+  /* display: block;
+  height: 100%;
+  width: 100%;
+  margin-top: 100px;
+  */
+  }
+  .tab1, .tab1-td1, .tab1-td2 {
+  border: 1px solid black;
+  border-collapse: collapse;
+  }
+
+  
+  .tab2, .tab2-tr, .tab2-td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 100px;
+    font-weight: bold;
+    text-align: center;
+    }
+  .tab2 {
+    position: absolute;
+    left: 0
+  }
+  .tab2-tr {
+    height: 25vh;
+  }
+  .tab2-td {
+    width: 100vh;
+  }
+
+  .start {
+  position: absolute;
+  left: 0px;
+  }
+
+  .cm10 {
+  position: absolute;
+  }
+
+  .cm21 {
+  position: absolute;
+  }
+
+  #footer {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  padding: 10px;
+  background-color: rgb(235, 235, 235);
+  color: black;
+  text-align: center;
+  }
+
+  #score {
+  background-color: rgb(0, 132, 255);
+  outline: 8px double rgb(255, 225, 0);
+  border-radius:10px 100px / 120px;;
+  color: yellow;
+  padding: 15px;
+  font-size: xx-large;
+  font-weight: bolder;
+  }
+
+  </style>
+</head>
+
+<body>
+  <nav role="navigation">
+    <div id="menuToggle">
+      <!--
+      A fake / hidden checkbox is used asf click reciever,
+      so you can use the :checked selector on it.
+      -->
+      <input type="checkbox" id="menuCheckbox" />
+
+      <!--
+      Some spans to act as a hamburger.
+      
+      They are acting like a real hamburger,
+      not that McDonalds stuff.
+      -->
+      <span></span>
+      <span></span>
+      <span></span>
+
+      <!--
+      Too bad the menu has to be inside of the button
+      but hey, it's pure CSS magic.
+              <button type="button" class="startExp" id="startExp" style="float: left; margin-left: 10vw" >Experimente starten</button>
+
+      -->
+      <ul id="menu">
+        <a href="#" id="startExp">
+          <li>Experimente starten</li>
+        </a>
+        <a href="#" id="download">
+          <li>Json download</li>
+        </a>
+        <a href="#" id="csvDownload">
+          <li>csv download</li>
+        </a>
+        <a href="#" id="id">
+          <li>!0. Experiment mit userId fortführen</li>
+        </a>
+        <a href="#" id="ques">
+          <li>0. Fragenkatalog</li>
+        </a>
+        <a href="#" id="exp1">
+          <li>1. Visuelle Simon-Aufgabe</li>
+        </a>
+        <a href="#" id="exp2">
+          <li>2. Akustische Simon-Aufgabe</li>
+        </a>
+        <a href="#" id="exp3">
+          <li>3. Alertness</li>
+        </a>
+        <a href="#" id="exp4">
+          <li>4. Visuell-räumliches Arbeitsgedächtnis</li>
+        </a>
+        <a href="#" id="exp5">
+          <li>5. Verdeckte Aufmerksamkeitsverschiebung</li>
+        </a>
+        <a href="#" id="exp6">
+          <li>!6. #Zahlen nachsprechen)</li>
+        </a>
+        <a href="#" id="exp7">
+          <li>7. visuell selektive Aufmerksamkeit</li>
+        </a>
+        <a href="#" id="exp7a">
+          <li>7. auditive selektive Aufmerksamkeit</li>
+        </a>
+        <a href="#" id="exp8">
+          <li>!8. #Kognitive Flexibilität)</li>
+        </a>
+        <a href="#" id="exp9">
+          <li>9. Verbal-numerisches Arbeitsgedächtnis</li>
+        </a>
+        <a href="#" id="exp10">
+          <li>10. Inhibitionsfähigkeit</li>
+        </a>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="popup">
+    <h3 id="popup-headline"> </h3>
+    <div id="popup-text"> </div>
+    <br>
+    <br>
+    <input type="checkbox" id="popup-checkbox" name="checkbox" value="Bike">
+    <label for="checkbox"> Ich stimme den Bedingungen zu und möchte am Experiment teilnehmen</label><br>
+  </div>
+  <div style="display:inline-block; padding-top: 0vh; width: 100%;">
+    <div id="arrowNumber" style="float: left; display:inline;margin-left: 8vw;">Anzahl des Durchlaufs</div>
+    <!-- margin-left: 1vw    --> 
+     <div id="score" style="float: left; display:inline; margin-left: 33vw">0<br>Punkte</div>
+    <div id="userId" style="float: left; display:inline; margin-left: 63vw">Experiment-Id</div>
+  </div>
+  <div id="base">
+    <div id="hello">
+      <table class="tab1" style="width:60%; margin-top: 10%; margin-left:20%; margin-right:20%; font-size:20px">
+        <tr>
+          <td class="tab1-td1" style="width:40%;"><img
+              src="https://t4.ftcdn.net/jpg/02/70/93/95/360_F_270939503_maJebkk8RKQzfQVB75WMwWGIHtIgxmvZ.jpg"></td>
+          <td class="tab1-td2" style="width:60%; vertical-align: top;padding-left: 20px;">Willkommen in der Klinik,<br><br>
+            wir suchen dringend fähiges Personal im Gesundheitsbereich. Bevor wir Sie aufwendig Einarbeiten, müssen Sie
+            uns zeigen, wo wir Sie einsetzen können. Können Sie schnell reagieren und die Seite auf der etwas passiert
+            unterscheiden, von der Seite wo Sie es sehen oder hören? Können Sie dabei vergangene Durchgänge einbeziehen?
+            In den folgenden Experimenten prüfen wir dies! Wir starten zunächst mit der Reaktionsfähigkeit und der
+            Seitenkompatibilität bzw. Inkompatibilität, später beziehen wir Ihre Erinnerung an die vergangen zwei
+            Durchgänge mit ein.</td>
+        </tr>
+      </table>
+
+    </div>
+    <div id="exp" style="display:inline-block; padding-left: 50vh;">
+
+
+      <table class="tab2">
+        <tr class="tab2-tr" id="c1"> <!--container--> 
+          <td class="tab2-td" id="arrow10"></td>
+          <td class="tab2-td" id="arrow11"></td>
+          <td class="tab2-td" id="arrow12"></td>
+        </tr>
+        <tr class="tab2-tr" id="c2">
+          <td class="tab2-td" id="arrow20"></td>
+          <td class="tab2-td" id="arrow21"></td>
+          <td class="tab2-td" id="arrow22"></td>
+        </tr>
+        <tr class="tab2-tr" id="c3">
+          <td class="tab2-td" id="arrow30"></td>
+          <td class="tab2-td" id="arrow31"></td>
+          <td class="tab2-td" id="arrow32"></td>
+        </tr>
+      </table>
+      <!-- <div class="container" id="c1" style="padding-top: 0vh;">
+        <br>
+        <div class="bigFont1" id="arrow10">&#8592;</div>
+        <div class="bigFont1" id="arrow11">X</div>
+        <div class="bigFont1" id="arrow12">&#8594;</div>
+      </div>
+
+      <div class="container" id="c2" style="padding-top: 14vh; ">
+        <br>
+        <div class="bigFont1" id="arrow20">&#8592;</div>
+        <div class="bigFont1" id="arrow21">X</div>
+        <div class="bigFont1" id="arrow22">&#8594;</div>
+      </div>
+
+      <div class="container" id="c3" style="padding-top: 13vh; ">
+        <br>
+        <div class="bigFont1" id="arrow30">&#8592;</div>
+        <div class="bigFont1" id="arrow31">X</div>
+        <div class="bigFont1" id="arrow32">&#8594;</div>
+      </div> -->
+      <div id="footer">
+        <div id="description" style="text-align: center;"></div> <!-- Erklärung: Betätigen sie so schnell und richtig sie können die
+          Tasten <br> "A"- für Pfeile nach Links, <br> "L" für Pfeile nach Rechts -->
+      </div>
+    </div>
+
+
+    <div id="questionForm" style="display: none;">
+      <div style="margin: 20px; padding: 10px; background-color: rgb(95, 184, 252);">
+        <strong>
+          <p id="qNumber" strong="true" style=" padding-left: 25px;"></p>
+        </strong>
+        <div>
+          <div id="questionDiv" strong="true"
+            style=" min-height:100px;margin:20px; background-color: white; padding: 10px;color:black;">question</div>
+          <div id="answer" style=" min-height:114px; margin: 20px; padding: 10px; background-color: rgb(255, 251, 239);"">
+            </div>
+        </div>
+      </div>
+ 
+      <div style=" padding-right: 20px; padding-left: 20px;">
+            <button id="backwardBtn" strong="true"
+              style="float: left;  color:black;padding: 5px; margin-left: 10%;"><b>zurück || <-- </b></button>
+            <button id="forwardBtn" strong="true"
+              style="float: right; color:black;padding: 5px; margin-right: 10%"><b>weiter || -->
+              </b></button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
